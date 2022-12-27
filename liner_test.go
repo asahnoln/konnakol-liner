@@ -12,9 +12,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGetLinedStringSimple(t *testing.T) {
+func TestMessyInputString(t *testing.T) {
 	str, err := liner.Line(
-		"Tha Ka Dhi Mi Tha Ka Dhi Mi Tha Ka Dhi Mi Tha Ka Dhi Mi Tha Ka Dhi Mi",
+		`Tha Ka Dhi Mi
+Tha Ka Dhi
+	Mi Tha Ka Dhi    Mi Tha
+Ka 						Dhi
+		Mi
+Tha
+	Ka
+		Dhi
+	Mi`,
 		liner.ThalamRoopaga,
 		liner.GathiChatushram)
 	require.NoError(t, err)
@@ -56,7 +64,7 @@ type ErrWriter struct {
 }
 
 func (*ErrWriter) Write([]byte) (int, error) {
-    return 0, iotest.ErrTimeout
+	return 0, iotest.ErrTimeout
 }
 
 func TestErrWritingLineOut(t *testing.T) {
