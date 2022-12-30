@@ -1,3 +1,5 @@
+// Package konnakolliner presents a couple of methods to format given strings
+// into separated lines by count of given thalam
 package konnakolliner
 
 import (
@@ -8,11 +10,13 @@ import (
 	"strings"
 )
 
+// Thalams, available to work with
 const (
 	ThalamAdi     = 8
 	ThalamRoopaga = 3
 )
 
+// Gathi, available to work with
 const (
 	GathiTisram     = 3
 	GathiChatushram = 4
@@ -22,10 +26,13 @@ const (
 )
 
 var (
-	ErrGathiLessThanOne  = errors.New("gathi must be greater than zero")
+	// ErrGathiLessThanOne signals that given gathi is less than one
+	ErrGathiLessThanOne = errors.New("gathi must be greater than zero")
+	// ErrThalamLessThanOne signals that given thalam count is less than one
 	ErrThalamLessThanOne = errors.New("thalam must be greater than zero")
 )
 
+// Line formats given konnakol line according to given thalam and gathi into separate lines for each count
 func Line(line string, thalam, gathi int) (string, error) {
 	if thalam < 1 {
 		return "", ErrThalamLessThanOne
@@ -52,6 +59,7 @@ func Line(line string, thalam, gathi int) (string, error) {
 	return result.String(), nil
 }
 
+// LineOut does the same thing as Line, but it reads from a Reader and prints to Writer
 func LineOut(r io.Reader, w io.Writer, thalam, gathi int) error {
 	s, err := io.ReadAll(r)
 	if err != nil {
