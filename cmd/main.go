@@ -7,13 +7,13 @@ import (
 	"log"
 	"os"
 
-	konnakolliner "github.com/asahnoln/konnakol-liner"
+	liner "github.com/asahnoln/konnakol-liner"
 )
 
 func main() {
-	thalam := flag.Int("t", konnakolliner.ThalamAdi, "set thalam count")
-	gathi := flag.Int("g", konnakolliner.GathiChatushram, "set gathi count")
+	thalam := flag.Int("t", liner.ThalamAdi, "set thalam count")
+	gathi := flag.Int("g", liner.GathiChatushram, "set gathi count")
 	flag.Parse()
 
-	log.Fatal(konnakolliner.LineOut(os.Stdin, os.Stdout, *thalam, *gathi))
+	log.Fatal(liner.Out(os.Stdin, os.Stdout, liner.Highlight, *thalam, *gathi))
 }

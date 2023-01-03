@@ -33,11 +33,11 @@ Tha
 |2| Tha Ka Dhi Mi`, str)
 }
 
-func TestGetLineOut(t *testing.T) {
+func TestGetOut(t *testing.T) {
 	b := &bytes.Buffer{}
 	s := strings.NewReader("Thaam . Dheem . Thaam . Dheem . Thaam . Dheem .")
 
-	err := liner.LineOut(s, b, liner.ThalamAdi, liner.GathiTisram)
+	err := liner.Out(s, b, liner.Line, liner.ThalamAdi, liner.GathiTisram)
 	require.NoError(t, err)
 
 	assert.Equal(t, `|1| Thaam . Dheem
@@ -67,29 +67,29 @@ func (*ErrWriter) Write([]byte) (int, error) {
 	return 0, iotest.ErrTimeout
 }
 
-func TestErrWritingLineOut(t *testing.T) {
+func TestErrWritingOut(t *testing.T) {
 	r := strings.NewReader("")
 	w := &ErrWriter{}
 
-	err := liner.LineOut(r, w, 1, 1)
+	err := liner.Out(r, w, liner.Line, 1, 1)
 
 	require.Error(t, err)
 }
 
-func TestErrLineOutWrongCounts(t *testing.T) {
+func TestErrOutWrongCounts(t *testing.T) {
 	r := strings.NewReader("")
 	w := &bytes.Buffer{}
 
-	err := liner.LineOut(r, w, 0, 0)
+	err := liner.Out(r, w, liner.Line, 0, 0)
 
 	require.Error(t, err)
 }
 
-func TestErrReadingLineOut(t *testing.T) {
+func TestErrReadingOut(t *testing.T) {
 	r := iotest.ErrReader(errors.New("error reading"))
 	w := &bytes.Buffer{}
 
-	err := liner.LineOut(r, w, 0, 0)
+	err := liner.Out(r, w, liner.Line, 0, 0)
 
 	require.Error(t, err)
 }

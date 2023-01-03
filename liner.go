@@ -59,14 +59,14 @@ func Line(line string, thalam, gathi int) (string, error) {
 	return result.String(), nil
 }
 
-// LineOut does the same thing as Line, but it reads from a Reader and prints to Writer
-func LineOut(r io.Reader, w io.Writer, thalam, gathi int) error {
+// Out does the same thing as Line/Highlight, but it reads from a Reader and prints to Writer
+func Out(r io.Reader, w io.Writer, f func(string, int, int) (string, error), thalam, gathi int) error {
 	s, err := io.ReadAll(r)
 	if err != nil {
 		return err
 	}
 
-	line, err := Line(string(s), thalam, gathi)
+	line, err := f(string(s), thalam, gathi)
 	if err != nil {
 		return err
 	}
